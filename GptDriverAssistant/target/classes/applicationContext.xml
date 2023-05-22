@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/GptDrivingAssistant?useSSL=false&amp;serverTimezone=UTC&amp; characterEncoding=utf8" />
+		<property name="username" value="root" />
+		<property name="password" value="wang123" />
+	</bean>
+	<!-- 系列dao类实例化及相关类实例注入 -->
+	<bean id="accountUserDao" class="com.qst.gptdrivingassistant.daoimpl.AccountUserDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="mainViewDao" class="com.qst.gptdrivingassistant.daoimpl.MainViewDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+
+	<!--系列biz类实例化及相关类实例注入 -->
+	<bean id="accountUserBiz" class="com.qst.gptdrivingassistant.bizimpl.AccountUserBizImpl">
+		<property name="accountUserDao" ref="accountUserDao" />
+	</bean>
+
+	<bean id="mainViewBiz" class="com.qst.gptdrivingassistant.bizimpl.MainViewBizImpl">
+		<property name="mainViewDao" ref="mainViewDao" />
+	</bean>
+
+
+	<!-- 系列Controller类实例化及相关类实例注入 -->
+	
+
+	<bean name="/toLogin.do" class="com.qst.gptdrivingassistant.web.AccountUserController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/toUserSetting.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/toSpeedWarn.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/toEnt.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/toVoice.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/toRegister.do" class="com.qst.gptdrivingassistant.web.AccountUserController">
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/userSetting.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/speedWarn.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/ent.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/voice.do" class="com.qst.gptdrivingassistant.web.SettingController">
+	    <!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+
+	<!--配置处理器Controller,映射/login.do请求 -->
+	<bean name="/login.do" class="com.qst.gptdrivingassistant.web.AccountUserController">
+		<!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/register.do" class="com.qst.gptdrivingassistant.web.AccountUserController">
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<!--配置处理器Controller,映射/logout.do请求 -->
+	<bean name="/logout.do" class="com.qst.gptdrivingassistant.web.AccountUserController">
+		<!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/mainView.do" class="com.qst.gptdrivingassistant.web.MainViewController">
+		<!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="mainViewBiz" ref="mainViewBiz" />
+	</bean>
+
+	<bean name="/userDel.do" class="com.qst.gptdrivingassistant.web.SettingController">
+		<!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/userUpdate.do" class="com.qst.gptdrivingassistant.web.SettingController">
+		<!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/adminUserSetting.do" class="com.qst.gptdrivingassistant.web.SettingController">
+		<!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+	<bean name="/getUpLoadImage.do" class="com.qst.gptdrivingassistant.web.SettingController">
+		<!-- 处理器映射器，将处理器Handel的name作为URL进行查找 -->
+		<property name="accountUserBiz" ref="accountUserBiz" />
+	</bean>
+
+
+	<bean
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	<!-- 处理器适配器，配置处理器中handleRequest()方法的调用 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+
+	<!-- 配置视图解析器，将ModelAndView及字符串解析为具体的页面 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>
